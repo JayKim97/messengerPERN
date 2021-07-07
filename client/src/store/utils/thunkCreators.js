@@ -11,7 +11,6 @@ import { gotUser, setFetchingStatus } from "../user";
 axios.interceptors.request.use(async function (config) {
   const token = await localStorage.getItem("messenger-token");
   config.headers["x-access-token"] = token;
-
   return config;
 });
 
@@ -95,15 +94,15 @@ const sendMessage = (data, body) => {
 // conversationId will be set to null if its a brand new conversation
 export const postMessage = (body) => (dispatch) => {
   try {
-    const data = saveMessage(body);
-
-    if (!body.conversationId) {
-      dispatch(addConversation(body.recipientId, data.message));
-    } else {
-      dispatch(setNewMessage(data.message));
-    }
-
-    sendMessage(data, body);
+    saveMessage(body)
+      .then(data =>{
+        if (!body.conversationId) {
+            dispatch(addConversation(body.recipientId, data.message));
+          } else {
+            dispatch(setNewMessage(data.message));
+          }
+        sendMessage(data,body)
+      })
   } catch (error) {
     console.error(error);
   }
