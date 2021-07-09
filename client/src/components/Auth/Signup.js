@@ -10,9 +10,12 @@ import {
   TextField,
   FormHelperText,
 } from "@material-ui/core";
-import { register } from "./store/utils/thunkCreators";
+import { register } from "../../store/utils/thunkCreators";
+import useStyles from './styles';
+
 
 const Login = (props) => {
+  const classes = useStyles();
   const history = useHistory();
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
@@ -22,7 +25,7 @@ const Login = (props) => {
     const username = event.target.username.value;
     const email = event.target.email.value;
     const password = event.target.password.value;
-    const confirmPassword = event.target.confirmPassword.value;
+    const confirmPassword = event.target.password.value;
 
     if (password !== confirmPassword) {
       setFormErrorMessage({ confirmPassword: "Passwords must match" });
@@ -37,16 +40,17 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to log in?</Typography>
-          <Button onClick={() => history.push("/login")}>Login</Button>
+    <Grid container justifyContent="center">
+      <Box className={classes.w_80}>
+        <Grid container item className={classes.right}>
+          <Typography className={classes.greyText}>Already have an account?</Typography>
+          <Button onClick={() => history.push("/login")} className={classes.buttonSwitch}>Login</Button>
         </Grid>
+        <Typography className={classes.headingText}>Create an account.</Typography>
         <form onSubmit={handleRegister}>
-          <Grid>
-            <Grid>
-              <FormControl>
+          <Grid align="center">
+            <Grid >
+              <FormControl className={classes.w_80}>
                 <TextField
                   aria-label="username"
                   label="Username"
@@ -57,7 +61,7 @@ const Login = (props) => {
               </FormControl>
             </Grid>
             <Grid>
-              <FormControl>
+              <FormControl className={classes.w_80}>
                 <TextField
                   label="E-mail address"
                   aria-label="e-mail address"
@@ -68,7 +72,7 @@ const Login = (props) => {
               </FormControl>
             </Grid>
             <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
+              <FormControl error={!!formErrorMessage.confirmPassword} className={classes.w_80}>
                 <TextField
                   aria-label="password"
                   label="Password"
@@ -83,7 +87,7 @@ const Login = (props) => {
               </FormControl>
             </Grid>
             <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
+              {/* <FormControl error={!!formErrorMessage.confirmPassword} className={classes.w_80}>
                 <TextField
                   label="Confirm Password"
                   aria-label="confirm password"
@@ -95,9 +99,9 @@ const Login = (props) => {
                 <FormHelperText>
                   {formErrorMessage.confirmPassword}
                 </FormHelperText>
-              </FormControl>
+              </FormControl> */}
             </Grid>
-            <Button type="submit" variant="contained" size="large">
+            <Button className={classes.buttonSubmit} type="submit" variant="contained" size="large">
               Create
             </Button>
           </Grid>

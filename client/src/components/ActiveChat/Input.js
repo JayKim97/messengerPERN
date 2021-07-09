@@ -3,6 +3,8 @@ import { FormControl, FilledInput } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
+import { readMessages } from "../../store/utils/thunkCreators"
+
 
 const styles = {
   root: {
@@ -46,6 +48,15 @@ class Input extends Component {
     });
   };
 
+  handleClick = async()=>{
+    
+    const reqBody={
+      conversationId: this.props.conversationId, 
+      senderId: this.props.otherUser.id
+    }
+    await this.props.readMessages(reqBody);
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -58,6 +69,7 @@ class Input extends Component {
             value={this.state.text}
             name="text"
             onChange={this.handleChange}
+            onFocus={this.handleClick}
           />
         </FormControl>
       </form>
@@ -77,6 +89,9 @@ const mapDispatchToProps = (dispatch) => {
     postMessage: (message) => {
       dispatch(postMessage(message));
     },
+    readMessages: (reqBody) =>{
+      dispatch(readMessages(reqBody))
+    }
   };
 };
 

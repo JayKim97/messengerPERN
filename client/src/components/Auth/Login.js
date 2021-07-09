@@ -9,9 +9,12 @@ import {
   FormControl,
   TextField,
 } from "@material-ui/core";
-import { login } from "./store/utils/thunkCreators";
+import { login } from "../../store/utils/thunkCreators";
+import useStyles from './styles';
+
 
 const Login = (props) => {
+  const classes = useStyles();
   const history = useHistory();
   const { user, login } = props;
 
@@ -28,34 +31,38 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
+    <Grid container justifyContent="center">
+      <Box className={classes.w_80}>
+        <Grid container item className={classes.right}>
+          <Typography className={classes.greyText}>Don't have an account?</Typography>
+          <Button 
+            onClick={() => history.push("/register")}
+            variant="outlined"
+            className={classes.buttonSwitch}>Create account</Button>
         </Grid>
+        <Typography className={classes.headingText}>Welcome back!</Typography>
         <form onSubmit={handleLogin}>
-          <Grid>
+          <Grid align="center">
             <Grid>
-              <FormControl margin="normal" required>
+              <FormControl margin="normal" required  className={classes.w_80} >
                 <TextField
                   aria-label="username"
-                  label="Username"
+                  label="E-mail address"
                   name="username"
                   type="text"
                 />
               </FormControl>
             </Grid>
-            <FormControl margin="normal" required>
+            <FormControl margin="normal" required  className={classes.w_80}> 
               <TextField
                 label="password"
-                aria-label="password"
+                aria-label="Password"
                 type="password"
                 name="password"
               />
             </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
+            <Grid align="center">
+              <Button type="submit" variant="contained" size="large" className={classes.buttonSubmit}>
                 Login
               </Button>
             </Grid>

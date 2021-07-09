@@ -48,12 +48,12 @@ class Home extends Component {
     return (
       <>
         {/* logout button will eventually be in a dropdown next to username */}
-        <Button className={classes.logout} onClick={this.handleLogout}>
+        {/* <Button className={classes.logout} onClick={this.handleLogout}>
           Logout
-        </Button>
+        </Button> */}
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
-          <SidebarContainer />
+          <SidebarContainer handleLogout ={this.handleLogout}/>
           <ActiveChat />
         </Grid>
       </>

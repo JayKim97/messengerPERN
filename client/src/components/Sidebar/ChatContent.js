@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Grid } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,9 +15,12 @@ const useStyles = makeStyles((theme) => ({
   },
   previewText: {
     fontSize: 12,
-    color: "#9CADC8",
     letterSpacing: -0.17,
   },
+
+  unreadText: {color: "#000000"},
+  readText:  {color: "#9CADC8"},
+
   notification: {
     height: 20,
     width: 20,
@@ -32,6 +35,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     borderRadius: 10,
   },
+  counter:{
+    fontSize: "12px",
+    background: "#3A8DFF",
+    borderRadius: "50%",
+    height: "20px",
+    width: "20px",
+    textAlign:"center",
+    margin:"auto 5% auto 0",
+    color: "#ffffff"
+  }
 }));
 
 const ChatContent = (props) => {
@@ -40,17 +53,23 @@ const ChatContent = (props) => {
   const { conversation } = props;
   const { latestMessageText, otherUser } = conversation;
   const count = conversation.messages.filter(message => (message.senderId === conversation.otherUser.id && !message.recipientRead)).length;
-
   return (
     <Box className={classes.root}>
       <Box>
         <Typography className={classes.username}>
-          {otherUser.username} ur:{count}
+          {otherUser.username}
         </Typography>
-        <Typography className={classes.previewText}>
+        {count > 0 ? 
+        <Typography className={`${classes.previewText} ${classes.unreadText}`}>
           {latestMessageText}
-        </Typography>
+        </Typography> :
+        (<Typography className={`${classes.previewText} ${classes.readText}`}>
+          {latestMessageText}
+        </Typography>)
+        }
+        
       </Box>
+      {count > 0 ? <Typography className={classes.counter}>{count}</Typography> : null}
     </Box>
   );
 };
