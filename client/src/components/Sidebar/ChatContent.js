@@ -39,12 +39,13 @@ const ChatContent = (props) => {
 
   const { conversation } = props;
   const { latestMessageText, otherUser } = conversation;
+  const count = conversation.messages.filter(message => (message.senderId === conversation.otherUser.id && !message.recipientRead)).length;
 
   return (
     <Box className={classes.root}>
       <Box>
         <Typography className={classes.username}>
-          {otherUser.username}
+          {otherUser.username} ur:{count}
         </Typography>
         <Typography className={classes.previewText}>
           {latestMessageText}
