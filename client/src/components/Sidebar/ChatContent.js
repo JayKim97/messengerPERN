@@ -18,7 +18,10 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: -0.17,
   },
 
-  unreadText: {color: "#000000"},
+  unreadText: {
+    color: "#000000",
+    fontWeight: 800
+  },
   readText:  {color: "#9CADC8"},
 
   notification: {
