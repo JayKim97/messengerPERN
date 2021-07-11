@@ -13,15 +13,9 @@ router.post("/", async (req, res, next) => {
     // if we already know conversation id, we can save time and just add it to message and return
     // SECURITY WARNING 
     if (conversationId) {
-      let deter = false
-      await Conversation.findConversation(senderId, recipientId)
-        .then(conversation =>{
-          if (conversation.getDataValue("id") === conversationId){
-            deter = true
-          }
-        })
-      if(!deter){
-        return res.sendStatus(401);
+      const conversation = await Conversation.findConversation(senderId, recipientId);
+      if (conversation.getDataValue("id") !== conversationId){
+        return res.sendStatus(403);
       }
       const message = await Message.create({ senderId, text, conversationId});
       return res.json({ message, sender });
