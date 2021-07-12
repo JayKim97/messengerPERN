@@ -49,12 +49,13 @@ class Input extends Component {
   };
 
   handleClick = async()=>{
-    
-    const reqBody={
-      conversationId: this.props.conversationId, 
-      senderId: this.props.otherUser.id
+    if(this.props.count> 0){
+      const reqBody={
+        conversationId: this.props.conversationId, 
+        senderId: this.props.otherUser.id
+      }
+      await this.props.readMessages(reqBody);
     }
-    await this.props.readMessages(reqBody);
   }
 
   render() {
