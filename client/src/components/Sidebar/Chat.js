@@ -25,11 +25,13 @@ class Chat extends Component {
 
   handleClick = async (conversation) => {
     await this.props.setActiveChat(conversation.otherUser.username, conversation.id, conversation.otherUser.id);
-    const reqBody={
-      conversationId: conversation.id, 
-      senderId: conversation.otherUser.id
+    if(conversation.unreadCount > 0){
+      const reqBody={
+        conversationId: conversation.id, 
+        senderId: conversation.otherUser.id
+      }
+      await this.props.readMessages(reqBody);
     }
-    await this.props.readMessages(reqBody);
   };
 
 
