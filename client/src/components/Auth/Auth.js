@@ -8,7 +8,6 @@ import useStyles from './styles';
 const Auth = () => {
   const classes = useStyles();
   const newUser = window.location.pathname !== "/login" 
-  console.log(newUser)
   return (
     <Grid container component="main" spacing={0}  className={classes.root}>
         <Grid item md={5} className={classes.applybg}>
