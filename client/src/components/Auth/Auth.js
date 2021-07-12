@@ -1,8 +1,7 @@
 import React from 'react'
 import { Grid, Typography, Paper} from "@material-ui/core";
 import logo from '../../assets/images/bubble.svg'
-import Signup from "./Signup.js";
-import Login from "./Login.js";
+import Form from './Form.js'
 import useStyles from './styles';
 
 const Auth = () => {
@@ -22,7 +21,7 @@ const Auth = () => {
           </Paper>
         </Grid>
         <Grid item md={7}>
-          {newUser ? <Signup/> : <Login/>}
+          {newUser ? <Form isLogin={false}/> : <Form isLogin={true}/>}
         </Grid>
       </Grid>
   )
