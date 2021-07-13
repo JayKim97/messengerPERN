@@ -40,7 +40,7 @@ const SenderBubble = (props) => {
       <Box className={classes.bubble}>
         <Typography className={classes.text}>{text}</Typography>
       </Box>
-      {imgUrl ? <Avatar src={imgUrl} className={classes.small}/> : null}
+      {imgUrl && <Avatar src={imgUrl} className={classes.small}/>}
     </Box>
   );
 };

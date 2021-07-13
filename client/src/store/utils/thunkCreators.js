@@ -85,8 +85,8 @@ const addReadData = (data) => {
   return data.map(convo => {
     const count = convo.messages.filter(message => (message.senderId === convo.otherUser.id && !message.recipientRead)).length;
     const latest = convo.messages.filter(message => (message.recipientRead && (message.senderId !== convo.otherUser.id) ))[0];
-    const latestMessage = latest && convo.otherUser.id !== convo.messages[0].senderId ? latest.id : -1
-    return {...convo, unreadCount: count, lastCheckedMessageId:  latestMessage}
+    const latestMessageId = latest && convo.otherUser.id !== convo.messages[0].senderId ? latest.id : -1
+    return {...convo, unreadCount: count, lastCheckedMessageId:  latestMessageId}
   })
 }
 
@@ -135,12 +135,10 @@ const editMessages = async (body) =>{
 
 export const readMessages = (body) => async (dispatch) => {
   try {
-    editMessages(body)
-      .then(data => {
-        if(data.messages.length > 0){
-          dispatch(updateRecipientRead(body.conversationId, body.senderId))
-        }
-      })
+    const data = await editMessages(body);
+    if(data.messages>0){
+      dispatch(updateRecipientRead(body.conversationId, body.senderId))
+    }
   } catch (error) {
    console.error(error) 
   }

@@ -62,17 +62,12 @@ const ChatContent = (props) => {
         <Typography className={classes.username}>
           {otherUser.username}
         </Typography>
-        {count > 0 ? 
-        <Typography className={`${classes.previewText} ${classes.unreadText}`}>
+        <Typography className={`${classes.previewText} ${(count>0 ? classes.unreadText : classes.readText)}`}>
           {latestMessageText}
-        </Typography> :
-        (<Typography className={`${classes.previewText} ${classes.readText}`}>
-          {latestMessageText}
-        </Typography>)
-        }
+        </Typography>
         
       </Box>
-      {count > 0 ? <Typography className={classes.counter}>{count}</Typography> : null}
+      {count > 0 && <Typography className={classes.counter}>{count}</Typography>}
     </Box>
   );
 };
