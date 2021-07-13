@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  updateRecipientRead
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -71,11 +72,22 @@ export const logout = (id) => async (dispatch) => {
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
-    dispatch(gotConversations(data));
+    dispatch(gotConversations(addReadData(data)));
   } catch (error) {
     console.error(error);
   }
 };
+
+
+
+const addReadData = (data) => {
+  return data.map(convo => {
+    const count = convo.messages.filter(message => (message.senderId === convo.otherUser.id && !message.recipientRead)).length;
+    const latest = convo.messages.filter(message => (message.recipientRead && (message.senderId !== convo.otherUser.id) ))[0];
+    const latestMessageId = latest && convo.otherUser.id !== convo.messages[0].senderId ? latest.id : -1
+    return {...convo, unreadCount: count, lastCheckedMessageId:  latestMessageId}
+  })
+}
 
 const saveMessage = async (body) => {
   const { data } = await axios.post("/api/messages", body);
@@ -92,7 +104,7 @@ const sendMessage = (data, body) => {
 
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
-export const postMessage = (body) => async(dispatch) => {
+export const postMessage = (body) => async (dispatch) => {
   try {
     const data = await saveMessage(body);
     if (!body.conversationId) {
@@ -114,3 +126,19 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
     console.error(error);
   }
 };
+
+const editMessages = async (body) =>{
+  const {data} = await axios.put("api/messages",body)
+  return data;
+}
+
+export const readMessages = (body) => async (dispatch) => {
+  try {
+    const data = await editMessages(body);
+    if(data.messages>0){
+      dispatch(updateRecipientRead(body.conversationId, body.senderId))
+    }
+  } catch (error) {
+   console.error(error) 
+  }
+}

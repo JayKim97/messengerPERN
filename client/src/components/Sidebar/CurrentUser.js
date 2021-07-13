@@ -42,7 +42,7 @@ const CurrentUser = (props) => {
       <BadgeAvatar photoUrl={user.photoUrl} online={true} />
       <Box className={classes.subContainer}>
         <Typography className={classes.username}>{user.username}</Typography>
-        <MoreHorizIcon classes={{ root: classes.ellipsis }} />
+        <MoreHorizIcon classes={{ root: classes.ellipsis }} onClick={props.handleLogout}/>
       </Box>
     </Box>
   );
