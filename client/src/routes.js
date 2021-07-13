@@ -40,8 +40,12 @@ const Routes = (props) => {
         />
       )}
       <Switch>
-        <Route path="/login" component={Auth} />
-        <Route path="/register" component={Auth} />
+        <Route path="/login">
+          <Auth newUser={false}/>
+        </Route>
+        <Route path="/register">
+          <Auth newUser={true}/>
+        </Route>
         <Route
           exact
           path="/"

@@ -5,9 +5,8 @@ import Signup from "./Signup.js";
 import Login from "./Login.js";
 import useStyles from './styles';
 
-const Auth = () => {
+const Auth = ({newUser}) => {
   const classes = useStyles();
-  const newUser = window.location.pathname !== "/login" 
   return (
     <Grid container component="main" spacing={0}  className={classes.root}>
         <Grid item md={5} className={classes.applybg}>
