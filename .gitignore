@@ -19,7 +19,5 @@ yarn-debug.log*
 yarn-error.log*
 
 server/.env
-# server/config/
-# server/models/
 
 */package-lock.json
