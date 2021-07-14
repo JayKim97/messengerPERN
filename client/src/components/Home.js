@@ -19,13 +19,6 @@ const Home = (props) => {
   const user = useSelector(state => state.user)
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if(user.id){
-  //     setIsLoggedIn(!isLoggedIn)
-  //   }
-  //   console.log("EXECUTED IS LOGGED IN ")
-  // }, [user.id])
-
   useEffect(() => {
     dispatch(fetchConversations());
   }, [dispatch])
