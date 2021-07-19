@@ -10,6 +10,7 @@ export const addMessageToStore = (state, payload) => {
       unreadCount: 1
     };
     newConvo.latestMessageText = message.text;
+    console.log(message.id)
     return [newConvo, ...state];
   }
 
@@ -92,6 +93,19 @@ export const editConvoFromStore = (state, conversationId,senderId) =>{
       return {...convo, messages: 
         convo.messages.map(message => 
           message.senderId === senderId ? {...message, recipientRead: true} : message), unreadCount: 0}
+    } else{
+      return convo
+    }
+  })
+}
+
+export const updateOthersRead = (state, conversationId, senderId) =>{
+  return state.map(convo =>{
+    if(convo.id === conversationId){
+      const curConvo = convo
+      return {...convo, messages: 
+        convo.messages.map(message => 
+          message.senderId === senderId ? {...message, recipientRead: true} : message) , lastCheckedMessageId: curConvo.messages[0].id}
     } else{
       return convo
     }

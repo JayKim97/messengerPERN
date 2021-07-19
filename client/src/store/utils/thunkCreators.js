@@ -136,11 +136,19 @@ const editMessages = async (body) =>{
   return data;
 }
 
+const sendReadStatus =(conversationId,senderId)=>{
+  socket.emit("recipient-read-message", {
+    conversationId: conversationId,
+    senderId: senderId 
+  })
+}
+
 export const readMessages = (body) => async (dispatch) => {
   try {
     const data = await editMessages(body);
     if(data.messages>0){
       dispatch(updateRecipientRead(body.conversationId, body.senderId))
+      sendReadStatus(body.conversationId,body.senderId)
     }
   } catch (error) {
    console.error(error) 
